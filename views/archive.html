@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>elasticsearch</title>
+</head>
+<body>
+    <h3>archive page list:</h3>
+    <div>
+        <% docs.forEach(function(doc){%>
+        <li><div><a href=<%=doc._source.url %>><%=doc._source.title %></a></div></li>
+        <% }) %>
+    </div>
+</body>
+</html>
