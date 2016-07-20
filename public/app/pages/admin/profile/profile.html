@@ -37,7 +37,7 @@
           <label for="inputFirstName" class="col-sm-3 control-label">用户名</label>
 
           <div class="col-sm-9">
-            <input type="text" name="username" class="form-control" id="inputFirstName" ng-model="profile.username" placeholder="" value="test" required minlength="3" maxlength="20">
+            <input type="text" name="username" class="form-control" id="inputFirstName" ng-model="profile.username" placeholder="" required minlength="3" maxlength="20">
             <p ng-show="myForm.username.$error.required &&  submitted" class="help-block">用户名必填.</p>
             <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于3个字符).</p>
             <p ng-show="myForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于20个字符).</p>
@@ -47,7 +47,7 @@
           <label for="inputLastName" class="col-sm-3 control-label">电话</label>
 
           <div class="col-sm-9">
-            <input type="number" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" value="" required minlength="11" maxlength="11">
+            <input type="number" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" required minlength="11" maxlength="11">
             <p ng-show="(myForm.phone.$error.minlength ||myForm.phone.$error.maxlength) &&  submitted" class="help-block">电话必须是11位.</p>
           </div>
         </div>
@@ -57,7 +57,7 @@
           <label class="col-sm-3 control-label">昵称</label>
 
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="nickname" ng-model="user.nickname" placeholder="" value="">
+            <input type="text" class="form-control" id="nickname" ng-model="profile.nickname" placeholder="" >
           </div>
         </div>
 
@@ -65,7 +65,7 @@
           <label for="inputOccupation" class="col-sm-3 control-label">邮箱</label>
 
           <div class="col-sm-9">
-            <input type="email" name="email" class="form-control" id="inputOccupation" ng-model="user.email" placeholder="" value="" required>
+            <input type="email" name="email" class="form-control" id="inputOccupation" ng-model="profile.email" placeholder="" required>
             <p ng-show="myForm.email.$invalid && !myForm.email.$pristine && submitted" class="help-block">邮箱格式不正确.</p>
           </div>
         </div>

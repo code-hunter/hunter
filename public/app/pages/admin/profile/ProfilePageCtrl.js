@@ -9,9 +9,9 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
+  function ProfilePageCtrl($scope, $http, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
-    $scope.username = 'test';
+    $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:''};
     $scope.picture = $filter('profilePicture')('Nasta');
 
     $scope.removePicture = function () {
@@ -49,7 +49,13 @@
       //   return;
       // }
 
-      alert($scope.username);
+      alert($scope.profile.username);
+      debugger
+      $http.post('/profiles/save', $scope.profile).success(function () {
+        alert('success');
+      }).error(function () {
+        alert('error');
+      })
 
     };
 
