@@ -3,8 +3,8 @@ news website use node.js
 
 ### run 
 
-# npm start
+npm start
 
 ### visit
 
-localhost:3000
+http://localhost:3000
