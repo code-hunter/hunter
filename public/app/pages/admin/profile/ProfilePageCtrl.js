@@ -9,7 +9,7 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, $http, fileReader, $filter, $uibModal) {
+  function ProfilePageCtrl($scope, $http, toastr, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
     $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:''};
     $scope.picture = $filter('profilePicture')('Nasta');
@@ -49,12 +49,10 @@
       //   return;
       // }
 
-      alert($scope.profile.username);
-      debugger
       $http.post('/profiles/save', $scope.profile).success(function () {
-        alert('success');
+        toastr.success('Your information has been saved successfully!');
       }).error(function () {
-        alert('error');
+        toastr.error("Your information hasn't been saved!", 'Error');
       })
 
     };
