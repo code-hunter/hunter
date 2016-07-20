@@ -13,7 +13,7 @@
     $stateProvider
         .state('admin.favorite', {
           url: '/favorite', 
-          title: 'Favorites',
+          title: '我的收藏',
           templateUrl : 'app/pages/admin/favorite/favorite.html',
           controller: 'FavoritePageCtrl',
           sidebarMeta: {

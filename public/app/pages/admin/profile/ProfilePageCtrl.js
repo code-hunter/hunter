@@ -10,6 +10,8 @@
 
   /** @ngInject */
   function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
+    $scope.submitted = false;
+    $scope.username = 'test';
     $scope.picture = $filter('profilePicture')('Nasta');
 
     $scope.removePicture = function () {
@@ -23,57 +25,14 @@
 
     };
 
-    $scope.socialProfiles = [
-      {
-        name: 'Facebook',
-        href: 'https://www.facebook.com/akveo/',
-        icon: 'socicon-facebook'
-      },
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com/akveo_inc',
-        icon: 'socicon-twitter'
-      },
-      {
-        name: 'Google',
-        icon: 'socicon-google'
-      },
-      {
-        name: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/akveo',
-        icon: 'socicon-linkedin'
-      },
-      {
-        name: 'GitHub',
-        href: 'https://github.com/akveo',
-        icon: 'socicon-github'
-      },
-      {
-        name: 'StackOverflow',
-        icon: 'socicon-stackoverflow'
-      },
-      {
-        name: 'Dribbble',
-        icon: 'socicon-dribble'
-      },
-      {
-        name: 'Behance',
-        icon: 'socicon-behace'
-      }
-    ];
-
-    $scope.unconnect = function (item) {
-      item.href = undefined;
-    };
-
     $scope.showModal = function (item) {
       $uibModal.open({
         animation: false,
         controller: 'ProfileModalCtrl',
         templateUrl: 'app/pages/profile/profileModal.html'
       }).result.then(function (link) {
-          item.href = link;
-        });
+        item.href = link;
+      });
     };
 
     $scope.getFile = function () {
@@ -82,8 +41,17 @@
             $scope.picture = result;
           });
     };
+  
+    $scope.submitForm = function (isValid) {
+      $scope.submitted = true;
+      // alert(isValid);
+      // if(!isValid) {
+      //   return;
+      // }
 
-    $scope.switches = [true, true, false, true, true, false];
+      alert($scope.username);
+
+    };
+
   }
-
 })();

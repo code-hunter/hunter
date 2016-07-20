@@ -13,7 +13,7 @@
     $stateProvider
         .state('admin.profile', {
           url: '/profile',
-          title: 'Profile',
+          title: '我的资料',
           templateUrl: 'app/pages/admin/profile/profile.html',
           controller: 'ProfilePageCtrl',
             sidebarMeta: {
