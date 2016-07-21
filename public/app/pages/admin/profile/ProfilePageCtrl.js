@@ -9,7 +9,7 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, $http, toastr, fileReader, $filter, $uibModal) {
+  function ProfilePageCtrl($scope, $http, toastr,Upload, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
     $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:''};
     $scope.picture = $filter('profilePicture')('Nasta');
@@ -25,6 +25,10 @@
 
     };
 
+    $scope.onFileSelect = function ($files) {
+        alert('select');
+    };
+
     $scope.showModal = function (item) {
       $uibModal.open({
         animation: false,
@@ -35,7 +39,8 @@
       });
     };
 
-    $scope.getFile = function () {
+    $scope.getFile = function (item) {
+      $scope.file = item;
       fileReader.readAsDataUrl($scope.file, $scope)
           .then(function (result) {
             $scope.picture = result;
@@ -44,16 +49,54 @@
   
     $scope.submitForm = function (isValid) {
       $scope.submitted = true;
-      // alert(isValid);
-      // if(!isValid) {
-      //   return;
-      // }
+      alert(isValid);
+      if(!isValid) {
+        return;
+      }
 
-      $http.post('/profiles/save', $scope.profile).success(function () {
+      Upload.upload({
+        url: '/profiles/save',
+        data:{file: $scope.file,
+              profile: $scope.profile,
+              username : $scope.profile.username}
+      }).then(function(res){
         toastr.success('Your information has been saved successfully!');
-      }).error(function () {
-        toastr.error("Your information hasn't been saved!", 'Error');
-      })
+      });
+
+      // $http({
+      //   method: 'POST',
+      //   url: '/profiles/save',
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   },
+      //   data: {
+      //     email: $scope.profile.email,
+      //     upload: $scope.file
+      //   },
+      //   transformRequest: function (data, headersGetter) {
+      //     var formData = new FormData();
+      //     angular.forEach(data, function (value, key) {
+      //       formData.append(key, value);
+      //     });
+      //
+      //     var headers = headersGetter();
+      //     delete headers['Content-Type'];
+      //
+      //     return formData;
+      //   }
+      // })
+      //     .success(function (data) {
+      //       toastr.success('Your information has been saved successfully!');
+      //     })
+      //     .error(function (data, status) {
+      //       toastr.error("Your information hasn't been saved!", 'Error');
+      //     });
+
+      // $http.post('/profiles/save', $scope.file).success(function () {
+      //   toastr.success('Your information has been saved successfully!');
+      // }).error(function () {
+      //   toastr.error("Your information hasn't been saved!", 'Error');
+      // })
 
     };
 

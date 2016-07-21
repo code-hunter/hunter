@@ -20,10 +20,11 @@
             <div class="userpic">
               <div class="userpic-wrapper">
                 <img ng-src="{{ picture }}" ng-click="uploadPicture()">
+                <!--<img ng-src="/uploads/file-1469094145945" ng-click="uploadPicture()">-->
               </div>
               <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
               <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
-              <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
+              <input type="file" ng-model="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
             </div>
           </div>
         </div>
@@ -37,9 +38,9 @@
           <label for="inputFirstName" class="col-sm-3 control-label">用户名</label>
 
           <div class="col-sm-9">
-            <input type="text" name="username" class="form-control" id="inputFirstName" ng-model="profile.username" placeholder="" required minlength="3" maxlength="20">
+            <input type="text" name="username" class="form-control" id="inputFirstName" ng-model="profile.username" placeholder="" required minlength="2" maxlength="20">
             <p ng-show="myForm.username.$error.required &&  submitted" class="help-block">用户名必填.</p>
-            <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于3个字符).</p>
+            <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于1个字符).</p>
             <p ng-show="myForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于20个字符).</p>
           </div>
         </div>
@@ -47,17 +48,19 @@
           <label for="inputLastName" class="col-sm-3 control-label">电话</label>
 
           <div class="col-sm-9">
-            <input type="number" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" required minlength="11" maxlength="11">
+            <input type="number" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" minlength="11" maxlength="11">
             <p ng-show="(myForm.phone.$error.minlength ||myForm.phone.$error.maxlength) &&  submitted" class="help-block">电话必须是11位.</p>
           </div>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group row clearfix">
+        <div class="form-group row clearfix" ng-class="{ 'has-error' : (myForm.nickname.$error.minlength ||myForm.nickname.$error.maxlength) &&  submitted}">
           <label class="col-sm-3 control-label">昵称</label>
 
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="nickname" ng-model="profile.nickname" placeholder="" >
+            <input type="text" name="nickname" class="form-control" id="nickname" ng-model="profile.nickname" minlength="2" maxlength="50" >
+            <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于1个字符).</p>
+            <p ng-show="myForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于50个字符).</p>
           </div>
         </div>
 
@@ -65,7 +68,7 @@
           <label for="inputOccupation" class="col-sm-3 control-label">邮箱</label>
 
           <div class="col-sm-9">
-            <input type="email" name="email" class="form-control" id="inputOccupation" ng-model="profile.email" placeholder="" required>
+            <input type="email" name="email" class="form-control" id="inputOccupation" ng-model="profile.email" placeholder="">
             <p ng-show="myForm.email.$invalid && !myForm.email.$pristine && submitted" class="help-block">邮箱格式不正确.</p>
           </div>
         </div>

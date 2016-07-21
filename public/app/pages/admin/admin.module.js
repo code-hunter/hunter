@@ -6,6 +6,7 @@
 
     angular.module('Hunter.pages.admin', [
         'ui.router',
+        'ngFileUpload',
 
         'Hunter.pages.admin.profile',
         'Hunter.pages.admin.favorite'
