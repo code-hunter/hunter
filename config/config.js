@@ -6,6 +6,7 @@ const path =  require('path');
 const App = {
     
     version: "0.1.0",
+    uploadDir : path.join(__dirname, '../public/uploads'),
     
     dev: {
         db:{
@@ -18,7 +19,7 @@ const App = {
             url: 'mongodb://127.0.0.1:27017/hunter',
             ttl: 60 * 60 * 24 * 7 //7 days
         },
-        cookie: { 
+        cookie: {
             maxAge: 60 * 60 * 24 * 7 
         }
     },
@@ -45,5 +46,6 @@ const env = App.dev
 module.exports = {
     dbSource: env.db.connection,
     session : env.session,
-    cookie: env.cookie
+    cookie: env.cookie,
+    uploadDir: App.uploadDir
 }

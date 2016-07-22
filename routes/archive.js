@@ -10,30 +10,6 @@ var mongoclient = require('mongodb').MongoClient;
 var config = require('../config/config')
 var url = config.dbSource;
 
-function getArchive(archive_id) {
-    var q = {};
-    if (archive_id) {
-        q.id = archive_id;
-    }
-
-    try{
-        mongoclient.connect(url, function (err, db) {
-
-            if(err) throw err;
-            var collection = db.collection('archive')
-            collection.findOne(q, function (err, doc) {
-                db.close();
-                if(err){
-                    return null;
-                }
-                return doc;
-            });
-        })
-    }catch (e) {
-        throw e;
-    }
-}
-
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
@@ -143,11 +119,11 @@ router.post('/createFav', function (req, res, next) {
     }
 })
 
-router.get('/getFav', function (req, res, next) {
+router.get('/getFavs', function (req, res, next) {
     var user_id = req.session.user_id
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
-
+    
     var q = {};
     if (user_id) {
         q.user_id = user_id;
