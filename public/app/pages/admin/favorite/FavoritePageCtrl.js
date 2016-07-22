@@ -9,7 +9,7 @@
       .controller('FavoritePageCtrl', FavoritePageCtrl);
 
   /** @ngInject */
-  function FavoritePageCtrl($scope, $http, archiveService, $filter, editableOptions, editableThemes) {
+  function FavoritePageCtrl($scope, $http, $filter, editableOptions, editableThemes) {
     
     $scope.selected = [];
     $scope.isChecked = false;
@@ -17,7 +17,6 @@
     $scope.smartTablePageSize = 5;
     var ctrl = $scope;
     $scope.smartTableData = [];
-
 
 
     $http.get('/archives/getFavs').then(function (res) {
