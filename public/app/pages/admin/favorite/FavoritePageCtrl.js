@@ -21,6 +21,7 @@
 
     $http.get('/archives/getFavs').then(function (res) {
       ctrl.docs = res.data;
+        ctrl.smartTableData = res.data
     });
 
     var updateSelected = function(action,id,name){
