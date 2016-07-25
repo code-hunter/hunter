@@ -9,7 +9,8 @@
         'ui.router',
 
         'Hunter.pages.admin',
-        'Hunter.pages.site'
+        'Hunter.pages.site',
+        'Hunter.pages.auth'
     ]);
 
 })();
