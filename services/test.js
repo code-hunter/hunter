@@ -1,12 +1,9 @@
 /**
  * Created by zhouyu on 2016/7/24.
  */
+var dbService = require('./dbservice')
+var dbConfig = require('../config/db')
 
-var archiveService = require('./archive')
+new dbService(dbConfig.archive).getPage({'id':1},{})
 
-query = {};
-
-archiveService.getPage(query).then(function(result){
-    console.log(result);
-})
 
