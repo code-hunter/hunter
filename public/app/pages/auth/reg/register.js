@@ -10,10 +10,11 @@
 
     /** @ngInject */
     function matchModel() {
+        console.log("=====1=====");
         return{
             restrict: 'ngModel',
             link: function (scope, element, attributes, ngModel){
-                console.log("===========");
+                console.log("=====2======");
                 var valCache = null;
                 scope.$watch(attributes["matchModel"], function (newVal, oldVal) {
                     valCache = newVal;
