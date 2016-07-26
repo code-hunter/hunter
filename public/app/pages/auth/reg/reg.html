@@ -4,7 +4,7 @@
     <h1>Sign up to Blur Admin</h1>
     <a href="auth.html" class="auth-link">Already have a Blur Admin account? Sign in!</a>
 
-    <form class="form-horizontal" name="myForm" ng-submit="submitForm(myForm.$valid)" novalidate >
+    <form class="form-horizontal" name="myForm" ng-submit="submitForm(myForm.$valid)"  novalidate>
       <div class="form-group">
         <label for="username" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
@@ -39,7 +39,6 @@
                  ng-model="user.passwordRepeat"
                  match-model="password"
                  placeholder="Confirm Password" required>
-          <p ng-show="myForm.passwordRepeat.$error " class="help-block">两次输入密码不一致.</p>
         </div>
       </div>
 

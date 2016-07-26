@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var everyauth = require('./lib/everyauth/index');
+require('./lib/auth/auth-settings')
 
 var MongoStore = require('connect-mongo')(session);
 var config = require('./config/config')
@@ -31,6 +33,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //config cookie
 app.use(cookieParser('hunter cookie'));
+
+//config everyauth
+app.use(everyauth.middleware());
 
 //config session
 app.use(session({

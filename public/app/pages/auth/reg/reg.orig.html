@@ -14,6 +14,7 @@
 
   <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
   <!-- bower:css -->
+
   <link rel="stylesheet" href="lib/ionicons.css" >
   <link rel="stylesheet" href="lib/angular-toastr.css" >
   <link rel="stylesheet" href="lib/animate.css" >
@@ -45,42 +46,65 @@
 <body>
 <main class="auth-main">
   <div class="auth-block">
-    <h1>Sign in to Blur Admin</h1>
-    <a href="reg.html" class="auth-link">New to Blur Admin? Sign up!</a>
+    <h1>Sign up to Blur Admin</h1>
+    <a href="auth.html" class="auth-link">Already have a Blur Admin account? Sign in!</a>
 
-    <form class="form-horizontal"  name="myForm" >
+    <form class="form-horizontal" name="myForm" ng-submit="submitForm(myForm.$valid)" novalidate >
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-
+        <label for="username" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+          <input type="text" class="form-control" id="username" name="username" ng-model="user.username" placeholder="Full Name" minlength="2" maxlength="20" required>
+          <p ng-show="myForm.username.$error.required  && submitted" class="help-block">用户名必填.</p>
+          <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于1个字符).</p>
+          <p ng-show="myForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于20个字符).</p>
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          <input type="email" class="form-control" id="email" name="email" ng-model="user.email" placeholder="Email" required>
+          <p ng-show="myForm.email.$invalid && !myForm.email.$pristine && submitted" class="help-block">邮箱格式不正确.</p>
         </div>
       </div>
+
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label" >Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" name="password"
+                 ng-model="user.password"
+                 placeholder="Password" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="passwordRepeat" class="col-sm-2 control-label" >Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="passwordRepeat" name="passwordRepeat"
+                 ng-model="user.passwordRepeat"
+                 match-model="password"
+                 placeholder="Confirm Password" required>
+        </div>
+      </div>
+
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default btn-auth">Sign in</button>
-          <a href class="forgot-pass">Forgot password?</a>
+          <button type="submit" class="btn btn-default btn-auth">Sign up</button>
         </div>
       </div>
     </form>
 
-    <div class="auth-sep"><span><span>or Sign in with one click</span></span></div>
+    <div class="auth-sep"><span><span>or Sign up with one click</span></span></div>
 
     <div class="al-share-auth">
       <ul class="al-share clearfix">
-        <li><a href="/auth/weibo"><i class="socicon socicon-facebook" title="Share on Facebook"></i></a></li>
+        <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
         <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
         <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
       </ul>
     </div>
   </div>
 </main>
+
 </body>
 </html>

@@ -14,7 +14,7 @@
     ])
         .config(routeConfig);
     
-    function  routeConfig($stateProvider, $urlRouterProvider) {
+    function  routeConfig($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/admin/profile');
 
         $stateProvider.state('admin',
@@ -22,5 +22,9 @@
                 url: '/admin',
                 templateUrl:'app/pages/admin/admin.html'
             }
-        )}
+        )
+        // $locationProvider.html5Mode(true);
+    }
+
+
 })();
