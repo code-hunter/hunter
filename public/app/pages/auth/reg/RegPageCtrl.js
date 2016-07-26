@@ -9,7 +9,9 @@
     angular.module('Hunter.pages.auth.reg')
         .controller('RegPageCtrl', RegPageCtrl);
 
-    function RegPageCtrl($scope) {
+
+    /** @ngInject */
+    function RegPageCtrl($scope, $http) {
         $scope.submitted = false;
         $scope.user = {username: "", password: "", email: "",passwordRepeat:""};
 
@@ -18,6 +20,18 @@
             if(!isValid) {
                 return;
             }
+            $http({
+                url: '/users/register',
+                method: 'POST',
+                emulateJSON: true,
+                data: {
+                    username: $scope.user.username,
+                    email: $scope.user.email,
+                    password: $scope.user.password
+                }
+            }).then(function (res) {
+                debugger;
+            });
         };
     }
 })();

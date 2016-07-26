@@ -13,7 +13,7 @@ var config = require('./config/config')
 
 var archives = require('./routes/archive');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/userController');
 var profiles = require('./routes/profile');
 
 var app = express();

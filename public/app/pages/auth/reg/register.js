@@ -4,34 +4,42 @@
 
 (function () {
     'use strict';
-
+    
     angular.module('Hunter.pages.auth.reg')
-        .directive("matchModel",matchModel);
+        .directive("pwdConfirm",pwdConfirm);
 
     /** @ngInject */
-    function matchModel() {
-        console.log("=====1=====");
-        return{
-            restrict: 'ngModel',
-            link: function (scope, element, attributes, ngModel){
-                console.log("=====2======");
-                var valCache = null;
-                scope.$watch(attributes["matchModel"], function (newVal, oldVal) {
-                    valCache = newVal;
-
-                    validate(ngModel.$viewValue);
+    function pwdConfirm() {
+        return {
+            require: 'ngModel',
+            link: function($scope, $elem, $attrs, $ctrl) {
+                var key = $attrs.pwdConfirm;
+                $elem.add("#" + key).on('keyup', function () {
+                    $scope.$apply(function () {
+                        $ctrl.$setValidity("isMatch", $elem.val() == $scope.myForm[key].$viewValue);
+                    });
                 });
 
-                var validate = function (value) {
-                    ngModel.$setValidity("match", value === valCache);
-                    return value === valCache ? value : undefined;
-                };
-
-                ngModel.$parsers.unshift(validate);
-
             }
-        }
+        };
     }
 
+    /** @ngInject */
+    function check() {
+        return {
+            require: 'ngModel',
+            link: function ($scope, $elem, $attrs, $ctrl, $http) {
+                $.elem.on("blur", function () {
+                    $scope.$apply(function () {
+                        $http.get("/user/check?key=" + $elem.val()).then(function (res) {
+                            debugger;
+                        });
+
+                        $ctrl.$setValidity("isMatch", $elem.val() == $scope.myForm[key].$viewValue);
+                    });
+                });
+            }
+        };
+    }
 
 })();
