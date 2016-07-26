@@ -16,6 +16,10 @@ var DbService = function (dbSource) {
         filter = {'id': id};
         return dbApi.findOne(this.dbSource, filter);
     },
+        
+    DbService.prototype.getOne = function (query) {
+        return dbApi.findOne(this.dbSource, query);
+    },
 
     DbService.prototype.deleteById = function (id) {
         filter = {'id': id};
@@ -29,7 +33,11 @@ var DbService = function (dbSource) {
 
     DbService.prototype.save = function (doc) {
         return dbApi.insertOne(this.dbSource, doc);
-    }
+    }, 
+    
+    DbService.prototype.count = function (query) {
+        return dbApi.insertOne(this.dbSource, query);
+    }   
 }
 
 module.exports = DbService;
