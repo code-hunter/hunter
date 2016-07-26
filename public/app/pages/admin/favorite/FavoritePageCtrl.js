@@ -14,15 +14,22 @@
     $scope.selected = [];
     $scope.isChecked = false;
     $scope.selectedBoxes = [];
-    $scope.smartTablePageSize = 5;
+    $scope.smartTablePageSize = 10;
+      $scope.leads = [];
+      $scope.leadsCollection = [].concat($scope.leads);
     var ctrl = $scope;
-    $scope.smartTableData = [];
+      debugger
 
 
-    $http.get('/archives/getFavs').then(function (res) {
-      ctrl.docs = res.data;
-        ctrl.smartTableData = res.data
-    });
+      $scope.serverFilter = function(tablestate){
+          $http.get('/archives/getFavs').then(function (res) {
+              debugger
+              tablestate.pagination.numberOfPages = res.data.length/$scope.smartTablePageSize + 1;
+              $scope.leads = res.data;
+              $scope.leadsCollection = [].concat($scope.leads);
+          });
+      }
+
 
     var updateSelected = function(action,id,name){
          if(action == 'add' && $scope.selected.indexOf(id) == -1){
