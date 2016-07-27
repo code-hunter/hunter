@@ -36,8 +36,8 @@ var DbService = function (dbSource) {
     }, 
     
     DbService.prototype.count = function (query) {
-        return dbApi.insertOne(this.dbSource, query);
-    }   
+        return dbApi.count(this.dbSource, query);
+    }
 }
 
 module.exports = DbService;
