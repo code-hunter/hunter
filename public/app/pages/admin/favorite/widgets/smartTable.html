@@ -1,5 +1,5 @@
 <div class="horizontal-scroll">
-  <table class="table" st-table="leadsCollection" st-safe-src="leads" st-pipe="serverFilter">
+  <table class="table" st-table="items"  st-pipe="callServer">
     <thead>
     <tr class="sortable header-row">
       <th style="padding-left: 25px;"><input type="checkbox" ng-model="isChecked" ng-click="selectAll($event)"></th>
@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in leadsCollection">
+    <tr ng-repeat="item in items">
       <td><input type="checkbox" ng-model="isChecked"   ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)"></td>
       <td> <a href={{item.url}}>{{item.title}}</a></td>
       <td>{{item.create_time}}</td>
@@ -17,7 +17,7 @@
     <tfoot>
     <tr>
       <td colspan="6" class="text-center">
-        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="6"></div>
+        <div  st-template="app/pages/admin/favorite/widgets/pagination.html"  st-pagination="" st-items-by-page="itemsByPage"></div>
       </td>
     </tr>
     </tfoot>

@@ -14,19 +14,36 @@
     $scope.selected = [];
     $scope.isChecked = false;
     $scope.selectedBoxes = [];
-    $scope.smartTablePageSize = 10;
-      $scope.leads = [];
-      $scope.leadsCollection = [].concat($scope.leads);
-    var ctrl = $scope;
-      debugger
+    $scope.itemsByPage = 10;
 
+      var ctrl = this;
 
-      $scope.serverFilter = function(tablestate){
-          $http.get('/archives/getFavs').then(function (res) {
+      $scope.selectPage = function (page) {
+          debugger;
+          console.log(page);
+      }
+
+      $scope.callServer = function(tableState){
+
+          ctrl.isLoading = true;
+
+          var pagination = tableState.pagination;
+
+          var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+          var number = pagination.number || 10;  // Number of entries showed per page.
+
+          // service.getPage(start, number, tableState).then(function (result) {
+          //     ctrl.displayed = result.data;
+          //     tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+          //     ctrl.isLoading = false;
+          // });
+
+          debugger
+          $http.get('/archives/getFavs?page='+start+'&size='+number).then(function (res) {
               debugger
-              tablestate.pagination.numberOfPages = res.data.length/$scope.smartTablePageSize + 1;
-              $scope.leads = res.data;
-              $scope.leadsCollection = [].concat($scope.leads);
+              tableState.pagination.numberOfPages = 2;
+              $scope.items = res.data;
+              ctrl.isLoading = false;
           });
       }
 

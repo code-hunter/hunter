@@ -121,7 +121,7 @@ router.post('/createFav', function (req, res, next) {
 
 router.get('/getFavs', function (req, res, next) {
     var user_id = req.session.user_id
-    var page = parseInt(req.query.page);
+    var start = parseInt(req.query.page);
     var size = parseInt(req.query.size);
     
     var q = {};
@@ -136,7 +136,7 @@ router.get('/getFavs', function (req, res, next) {
 
             if(err) throw err;
             var collection = db.collection('user_fav_archive')
-            collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
+            collection.find(q).skip(start).sort(s).limit(size).toArray(function(err, docs) {
                 // console.log(docs);
                 db.close();
                 res.send(docs);
