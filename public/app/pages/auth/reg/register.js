@@ -31,14 +31,15 @@
         return {
             require: 'ngModel',
             link: function ($scope, $elem, $attrs, $ctrl) {
+                var key = $attrs.check;
                 $elem.on("blur", function () {
                     $scope.$apply(function () {
                         $http.get("/users/check?key=" + $elem.val()).then(function (res) {
                             var isHave = false;
-                            if(res.data.status == "success") {
-                                isHave = res.data.content;
+                            if(res.data && res.data.code == 0){
+                                isHave = res.data.data;
                             }
-                            $ctrl.$setValidity("isHave", !isHave);
+                            $ctrl.$setValidity(key, !isHave);
                         });
                     });
                 });

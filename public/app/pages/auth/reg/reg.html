@@ -4,21 +4,20 @@
     <h1>Sign up to Blur Admin</h1>
     <a href="auth.html" class="auth-link">Already have a Blur Admin account? Sign in!</a>
 
-    <form class="form-horizontal" id="myForm" name="myForm" ng-submit="submitForm(myForm.$valid)" novalidate>
+    <form class="form-horizontal" id="mForm" name="mForm" ng-submit="submitForm(mForm.$valid)" novalidate>
       <div class="form-group">
         <label for="username" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="username" name="username"
+          <input type="text" class="form-control" id="username" name="username" placeholder="user name"
                  ng-model="user.username"
-                 placeholder="Full Name"
                  minlength="2"
                  maxlength="20"
-                 check
-                 ng-required>
-          <p ng-show="myForm.username.$error.required  && submitted" class="help-block">用户名必填.</p>
-          <p ng-show="myForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于2个字符).</p>
-          <p ng-show="myForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于20个字符).</p>
-          <p ng-show="myForm.username.$error.isHave" class="help-block">用户已存在</p>
+                 check="username"
+                 required>
+          <p ng-show="mForm.username.$error.required  && submitted" class="help-block">用户名必填.</p>
+          <p ng-show="mForm.username.$error.minlength && submitted" class="help-block">用户名太短(大于2个字符).</p>
+          <p ng-show="mForm.username.$error.maxlength && submitted" class="help-block">用户名太长(小于20个字符).</p>
+          <p ng-show="mForm.username.$error.username" class="help-block">用户已存在</p>
         </div>
       </div>
 
@@ -28,10 +27,11 @@
           <input type="email" class="form-control" id="email" name="email"
                  ng-model="user.email"
                  placeholder="Email"
-                 check
-                 ng-required>
-          <p ng-show="myForm.email.$invalid && !myForm.email.$pristine && submitted" class="help-block">邮箱格式不正确.</p>
-          <p ng-show="myForm.username.$error.isHave" class="help-block">邮箱已被注册</p>
+                 check="email"
+                 required>
+          <p ng-show="mForm.email.$error.required  && submitted" class="help-block">邮箱必填.</p>
+          <p ng-show="mForm.email.$invalid && !mForm.email.$pristine && submitted" class="help-block">邮箱格式不正确.</p>
+          <p ng-show="mForm.email.$error.email" class="help-block">邮箱已被注册</p>
         </div>
       </div>
 
@@ -41,13 +41,13 @@
           <input type="password" class="form-control" id="password" name="password"
                  ng-model="user.password"
                  placeholder="Password"
-                 minlength="4" maxlength="20"
+                 minlength="4"
                  maxlength="20"
-                 ng-required>
+                 required>
 
-          <p ng-show="myForm.password.$error.required  && submitted" class="help-block">密码必填.</p>
-          <p ng-show="myForm.password.$error.minlength && submitted" class="help-block">密码太短(大于4个字符).</p>
-          <p ng-show="myForm.password.$error.maxlength && submitted" class="help-block">密码太长(小于20个字符).</p>
+          <p ng-show="mForm.password.$error.required  && submitted" class="help-block">密码必填.</p>
+          <p ng-show="mForm.password.$error.minlength && submitted" class="help-block">密码太短(大于4个字符).</p>
+          <p ng-show="mForm.password.$error.maxlength && submitted" class="help-block">密码太长(小于20个字符).</p>
         </div>
       </div>
 
@@ -59,11 +59,11 @@
                  pwd-confirm="password"
                  placeholder="Confirm Password"
                  minlength="4" maxlength="20"
-                 ng-required>
-          <p ng-show="myForm.passwordRepeat.$error.required  && submitted" class="help-block">密码必填.</p>
-          <p ng-show="myForm.passwordRepeat.$error.minlength && submitted" class="help-block">密码太短(大于4个字符).</p>
-          <p ng-show="myForm.passwordRepeat.$error.maxlength && submitted" class="help-block">密码太长(小于20个字符).</p>
-          <p ng-show="myForm.passwordRepeat.$error.isMatch" class="help-block">两次输入密码不一致.</p>
+                 required>
+          <p ng-show="mForm.passwordRepeat.$error.required  && submitted" class="help-block">密码必填.</p>
+          <p ng-show="mForm.passwordRepeat.$error.minlength && submitted" class="help-block">密码太短(大于4个字符).</p>
+          <p ng-show="mForm.passwordRepeat.$error.maxlength && submitted" class="help-block">密码太长(小于20个字符).</p>
+          <p ng-show="mForm.passwordRepeat.$error.isMatch" class="help-block">两次输入密码不一致.</p>
         </div>
       </div>
 

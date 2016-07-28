@@ -30,11 +30,12 @@
                     password: $scope.user.password
                 }
             }).then(function (res) {
-                if(res.data && res.data.status == "success") {
-                    window.location.href = "#/admin"
+                if(res.data && res.data.code == 0) {
+                    window.location.href = "#/admin/profile"
                 }else{
                     console.log("failed to reg user.");
                 }
+                $scope.submitted = false;
             });
         };
     }

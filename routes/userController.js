@@ -19,11 +19,11 @@ router.get("/check", function (req, res, next) {
   }
   try{
     service.getOne(query).then(function (result) {
-      res.send({status: "success", content: result != null});
+      res.send(Json.success(result != null));
     });
   }catch (e){
     console.log(e);
-    res.send({status: "fail", msg: Json.error(e)});
+    res.send(Json.error(e));
   }
 
 });
@@ -34,8 +34,6 @@ router.post("/register", function (req, res, next) {
   var pwd = req.body.password;
 
   try{
-    var query = {};
-    query.username = username;
     service.save(
         {
           id: uuid.v1(),
@@ -53,87 +51,36 @@ router.post("/register", function (req, res, next) {
           req.user = user;
           req.session.userId = user.id;
           req.session.save();
-          res.send({data: user.user_name, status: "success"});
+          res.send(Json.success());
         });
       }else{
-        res.send({"status": "fail", "code": "0002"});
+        res.send(Json.error());
       }
     });
   }catch (e){
     console.log(e);
+    res.send(Json.error());
   }
 });
 
-/*
-app.post("/re", function (req, res, next) {
-  var user_name = req.body.user_name;
-  var pwd = req.body.pwd;
 
-  client.connect(url, function (err, db) {
-    var collection = db.collection('users');
+router.post("/login", function (req, res, next) {
+  var username = req.body.username;
+  var pwd = req.body.password;
 
-    collection.find({"user_name": user_name}).toArray(function (err, docs) {
-      if(docs.length > 0) {
-        res.send({"status": "fail", "code": "0001"});
-      }else {
-        collection.insertOne({id:uuid.v1(), user_name: user_name, pwd: utils.md5(pwd)}, function (err, r) {
-          console.log("insert :"+r);
-          if(1 == r.insertedCount) {
-            var user = r.ops[0];
-            //set cookie
-            res.cookie("login", true);
-
-            //set session
-            req.session.regenerate(function(){
-              req.user = user;
-              req.session.userId = user.id;
-              req.session.save();
-
-              res.send({data: user.user_name, status: "success"});
-            });
-          }
-        });
-      }
+  try{
+    service.getOne({username: username}).then(function (result) {
+        res.send(Json.success(result && result.password == utils.md5(pwd)));
     });
-  })
+  }catch (e){
+    console.log(e);
+    res.send(Json.error(e));
+  }
 });
-
-app.post("/login", function (req, res, next) {
-  var user_name = req.body.user_name;
-  var pwd = req.body.pwd;
-
-  client.connect(url, function (err, db) {
-    var collection = db.collection('users');
-    collection.find({"user_name": user_name}).toArray(function (err, docs) {
-      if(docs.length == 0) {
-        res.send({"status": "fail", "code": "0002"});
-      }else {
-        var user = docs[0];
-        if(!utils.md5(pwd) == user.pwd){
-          res.send({"status": "fail", "code": "0003"})
-        }else{
-          //set cookie
-          res.cookie("login", true);
-
-          //set session
-          req.session.regenerate(function(){
-            req.session.user = user;
-            req.session.user_id = user.id;
-            req.session.save();
-
-            res.send({data: user.id, status: "success"});
-          });
-        }
-      }
-    });
-  });
-});
-
-app.get("/logout", function (req, res, next) {
+router.get("/logout", function (req, res, next) {
   res.clearCookie("login");
   delete res.session.user;
   delete res.session.user_id;
   res.send("/")
 });
-*/
 module.exports = router;
