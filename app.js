@@ -17,6 +17,7 @@ var archives = require('./routes/archive');
 var routes = require('./routes/index');
 var users = require('./routes/userController');
 var profiles = require('./routes/profileController');
+var favorites = require('./routes/favoriteController');
 
 var app = express();
 
@@ -61,6 +62,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/archives', archives);
 app.use('/profiles', profiles);
+app.use('/favorites', favorites);
 
 
 

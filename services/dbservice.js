@@ -37,6 +37,10 @@ var DbService = function (dbSource) {
     
     DbService.prototype.count = function (query) {
         return dbApi.count(this.dbSource, query);
+    },
+        
+    DbService.prototype.deleteMany = function (filter) {
+        return dbApi.deleteMany(this.dbSource, filter);
     }
 }
 

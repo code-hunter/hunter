@@ -8,6 +8,8 @@ var router = express.Router();
 var dbService = require('../services/dbservice');
 var Json = require('../lib/result')
 
+var dbConfig = require('../config/db');
+var archiveService = new dbService(dbConfig.archive);
 
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
@@ -38,7 +40,7 @@ router.get('/getPage', function (req, res, next) {
             o.skip = 0;
         }
 
-        dbService.getPage(q, o).then(function(result){
+        archiveService.getPage(q, o).then(function(result){
             res.send(Json.success(result));
         })
     }catch (e) {

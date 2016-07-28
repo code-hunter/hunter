@@ -497,7 +497,6 @@ ng.module('smart-table')
       link: {
 
         pre: function (scope, element, attrs, ctrl) {
-
           var pipePromise = null;
 
           if (ng.isFunction(scope.stPipe)) {
