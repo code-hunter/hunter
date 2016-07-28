@@ -81,23 +81,35 @@
     </form>
 
     <h3 class="with-line">修改密码</h3>
-    <form name="passForm" ng-submit="onSubmitPassword(passForm.$valid)" novalidate>
+    <form name="mForm" ng-submit="onSubmitPassword(mForm.$valid)" novalidate>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row clearfix">
-          <label for="inputPassword" class="col-sm-3 control-label">新密码</label>
+          <label for="pass" class="col-sm-3 control-label">新密码</label>
 
-          <div class="col-sm-9">
-            <input type="password" name="pass" ng-model="profile.pass" class="form-control" id="inputPassword"  >
+          <div class="col-sm-9" ng-class="{ 'has-error' :(mForm.pass.$error.minlength ||mForm.pass.$error.maxlength) && !mForm.pass.$pristine }">
+            <input type="password" name="pass" ng-model="profile.pass" class="form-control" id="pass"
+                   minlength="4" maxlength="20"
+                   required>
+            <p ng-show="mForm.pass.$error.required  && submittedPass" class="help-block">密码必填.</p>
+            <p ng-show="mForm.pass.$error.minlength && submittedPass" class="help-block">密码太短(大于4个字符).</p>
+            <p ng-show="mForm.pass.$error.maxlength && submittedPass" class="help-block">密码太长(小于20个字符).</p>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group row clearfix">
-          <label for="inputConfirmPassword" class="col-sm-3 control-label">重复密码</label>
+          <label for="repass" class="col-sm-3 control-label">重复密码</label>
 
-          <div class="col-sm-9">
-            <input type="password" name="repass" ng-model="profile.repass" class="form-control" id="inputConfirmPassword" >
+          <div class="col-sm-9" ng-class="{ 'has-error' : (mForm.repass.$error.minlength ||mForm.repass.$error.maxlength || mForm.repass.$error.isMatch) && (!mForm.repass.$pristine ||!mForm.pass.$pristine  )}">
+            <input type="password" name="repass" ng-model="profile.repass" class="form-control" id="repass"
+                   pwd-confirm="pass"
+                   minlength="4" maxlength="20"
+                   required>
+            <p ng-show="mForm.repass.$error.required  && submittedPass" class="help-block">密码必填.</p>
+            <p ng-show="mForm.repass.$error.minlength && submittedPass" class="help-block">密码太短(大于4个字符).</p>
+            <p ng-show="mForm.repass.$error.maxlength && submittedPass" class="help-block">密码太长(小于20个字符).</p>
+            <p ng-show="mForm.repass.$error.isMatch " class="help-block">两次输入密码不一致.</p>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
 (function () {
     'use strict';
     
-    angular.module('Hunter.pages.auth.reg')
+    angular.module('Hunter.pages')
         .directive("pwdConfirm",pwdConfirm)
         .directive("check",['$http',check]);
 
@@ -18,7 +18,7 @@
                 var key = $attrs.pwdConfirm;
                 $elem.add("#" + key).on('keyup', function () {
                     $scope.$apply(function () {
-                        $ctrl.$setValidity("isMatch", $elem.val() == $scope.myForm[key].$viewValue);
+                        $ctrl.$setValidity("isMatch", $elem.val() == $scope.mForm[key].$viewValue);
                     });
                 });
 

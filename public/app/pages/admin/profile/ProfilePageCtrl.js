@@ -11,6 +11,7 @@
   /** @ngInject */
   function ProfilePageCtrl($scope, $http, toastr,Upload,md5, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
+    $scope.submittedPass = false;
     $scope.profile = {username:'', nickname:'', phone:'', email:'', pass:"", repass:''};
     $scope.picture = $filter('profilePicture')('nohead');
 
@@ -70,10 +71,13 @@
 
     $scope.onSubmitPassword = function (isValid) {
       
-      $scope.submitted = true;
+      $scope.submittedPass = true;
       if(!isValid) {
         return;
       }
+      
+      alert(isValid);
+      return;
 
       $http({
         url: '/profiles/modPass',
@@ -83,7 +87,7 @@
           password: md5.createHash($scope.profile.pass)
         }
       }).then(function (res) {
-        $scope.submitted = false;
+        $scope.submittedPass = false;
         if(res.data.code < 0){
           toastr.error(res.data.msg);
         }else{

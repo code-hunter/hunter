@@ -21,6 +21,11 @@ const db = {
         'dbCollection': 'favorite'
     },
 
+    'approve': {
+        'dbName': config.dbSource,
+        'dbCollection': 'approve'
+    },
+
     'user': {
         'dbName': config.dbSource,
         'dbCollection': 'user'
@@ -31,5 +36,6 @@ module.exports = {
     archive: db.archive,
     profile: db.profile,
     favorite: db.favorite,
+    approve: db.approve,
     user: db.user
 }
