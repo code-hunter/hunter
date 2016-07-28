@@ -12,14 +12,14 @@ router.get("/check", function (req, res, next) {
   var key = req.query.key;
   var query = {};
 
-  if(key.charCodeAt("@")>0) {
+  if(key.indexOf("@") != -1) {
     query.email = key;
   }else {
     query.username = key;
   }
   try{
     service.getOne(query).then(function (result) {
-      res.send({status: "success", content: result.data != null});
+      res.send({status: "success", content: result != null});
     });
   }catch (e){
     console.log(e);
@@ -36,29 +36,27 @@ router.post("/register", function (req, res, next) {
   try{
     var query = {};
     query.username = username;
-    service.getOne(query).then(function (result) {
-      if(result.data != null) {
-        res.send({"status": "fail", "code": "0001"});
-      }else {
-        service.save({id: uuid.v1(), username: username, password: utils.md5(pwd)})
-            .then(function (res) {
-              if(1 == res.data.insertedCount) {
-                var user = res.data.ops[0];
-                //set cookie
-                res.cookie("login", true);
-
-                //set session
-                req.session.regenerate(function(){
-                  req.user = user;
-                  req.session.userId = user.id;
-                  req.session.save();
-
-                  res.send({data: user.user_name, status: "success"});
-                });
-              }else{
-                res.send({"status": "fail", "code": "0002"});
-              }
-            });
+    service.save(
+        {
+          id: uuid.v1(),
+          username: username,
+          password: utils.md5(pwd),
+          email: email
+        }
+    ).then(function (result) {
+      if(1 == result.insertedCount) {
+        var user = result.ops[0];
+        //set cookie
+        res.cookie("login", true);
+        //set session
+        req.session.regenerate(function(){
+          req.user = user;
+          req.session.userId = user.id;
+          req.session.save();
+          res.send({data: user.user_name, status: "success"});
+        });
+      }else{
+        res.send({"status": "fail", "code": "0002"});
       }
     });
   }catch (e){

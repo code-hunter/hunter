@@ -11,7 +11,7 @@
 
 
     /** @ngInject */
-    function RegPageCtrl($scope, $http) {
+    function RegPageCtrl($scope, $http, $location) {
         $scope.submitted = false;
         $scope.user = {username: "", password: "", email: "",passwordRepeat:""};
 
@@ -30,7 +30,11 @@
                     password: $scope.user.password
                 }
             }).then(function (res) {
-                debugger;
+                if(res.data && res.data.status == "success") {
+                    window.location.href = "#/admin"
+                }else{
+                    console.log("failed to reg user.");
+                }
             });
         };
     }

@@ -6,7 +6,9 @@
     'use strict';
     
     angular.module('Hunter.pages.auth.reg')
-        .directive("pwdConfirm",pwdConfirm);
+        .directive("pwdConfirm",pwdConfirm)
+        .directive("check",['$http',check]);
+
 
     /** @ngInject */
     function pwdConfirm() {
@@ -25,17 +27,19 @@
     }
 
     /** @ngInject */
-    function check() {
+    function check($http) {
         return {
             require: 'ngModel',
-            link: function ($scope, $elem, $attrs, $ctrl, $http) {
-                $.elem.on("blur", function () {
+            link: function ($scope, $elem, $attrs, $ctrl) {
+                $elem.on("blur", function () {
                     $scope.$apply(function () {
-                        $http.get("/user/check?key=" + $elem.val()).then(function (res) {
-                            debugger;
+                        $http.get("/users/check?key=" + $elem.val()).then(function (res) {
+                            var isHave = false;
+                            if(res.data.status == "success") {
+                                isHave = res.data.content;
+                            }
+                            $ctrl.$setValidity("isHave", !isHave);
                         });
-
-                        $ctrl.$setValidity("isMatch", $elem.val() == $scope.myForm[key].$viewValue);
                     });
                 });
             }
