@@ -9,7 +9,7 @@
       .controller('FavoritePageCtrl', FavoritePageCtrl);
 
   /** @ngInject */
-  function FavoritePageCtrl($scope, $http, $filter, editableOptions, editableThemes) {
+  function FavoritePageCtrl($scope, $http, $filter,toastr, editableOptions, editableThemes) {
     
     $scope.selected = [];
     $scope.isChecked = false;
@@ -31,6 +31,34 @@
           });
       }
 
+      $scope.onDelete = function () {
+          debugger
+          var ids = '';
+          if($scope.selected.length > 0){
+              ids = $scope.selected.join(',');
+          }else{
+              toastr.error('请先选择要删除的项');
+              return;
+          }
+          debugger;
+          return;
+          $http({
+              url: '/favorites/delete',
+              method: 'POST',
+              emulateJSON: true,
+              data: {
+                  ids: ids
+              }
+          }).then(function (res) {
+              $scope.submitted = false;
+              if(res.data.code < 0){
+                  toastr.error(res.data.msg);
+              }else{
+                  toastr.success(res.data.msg);
+              }
+          });
+      }
+
     var updateSelected = function(action,id,name){
          if(action == 'add' && $scope.selected.indexOf(id) == -1){
                $scope.selected.push(id);
@@ -44,6 +72,7 @@
      $scope.updateSelection = function($event, id){
            var checkbox = $event.target;
            var action = (checkbox.checked?'add':'remove');
+         debugger
            updateSelected(action,id,checkbox.name);
            if(checkbox.checked){
              $scope.selectedBoxes.push(checkbox);
@@ -55,11 +84,21 @@
      }
 
     $scope.selectAll = function ($event){
+        debugger
       var checkbox = $event.target;
       $scope.isChecked = (checkbox.checked);
       $scope.selectedBoxes.forEach(function(item){
         item.checked = checkbox.checked;
       })
+
+        $scope.items.forEach(function(item){
+            if(checkbox.checked){
+                $scope.selected.push(item.id);
+            }else {
+                $scope.selected.slice(item.id, 1);
+            }
+
+        })
     }
   }
 

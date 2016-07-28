@@ -12,7 +12,7 @@
   function ProfilePageCtrl($scope, $http, toastr,Upload,md5, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
     $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:'', pass:"", repass:''};
-    $scope.picture = $filter('profilePicture')('Nasta');
+    $scope.picture = $filter('profilePicture')('nohead');
 
     $scope.removePicture = function () {
       $scope.picture = $filter('appImage')('theme/no-photo.png');
