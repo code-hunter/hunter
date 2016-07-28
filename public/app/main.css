@@ -4329,7 +4329,8 @@ h1.al-title {
       right: 75px; } }
 
 .page-top {
-  background-color: #1C2B36;
+  /*background-color: #1C2B36;*/
+  background-color: #218868;
   position: fixed;
   z-index: 904;
   box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.5);
@@ -4338,7 +4339,19 @@ h1.al-title {
   min-width: 320px;
   padding: 0 32px 0 40px; }
   .page-top.scrolled {
-    background-color: rgba(0, 0, 0, 0.85); }
+    background-color: #218868; }
+
+.admin-top {
+  background-color: #1C2B36;
+  position: fixed;
+  z-index: 904;
+  box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.5);
+  height: 66px;
+  width: 100%;
+  min-width: 320px;
+  padding: 0 32px 0 40px; }
+.admin-top.scrolled {
+  background-color: rgba(0,0,0,0.85); }
 
 a.al-logo {
   color: #ffffff;

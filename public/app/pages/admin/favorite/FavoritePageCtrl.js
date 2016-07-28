@@ -9,17 +9,18 @@
       .controller('FavoritePageCtrl', FavoritePageCtrl);
 
   /** @ngInject */
-  function FavoritePageCtrl($scope, $http, $filter,toastr, editableOptions, editableThemes) {
+  function FavoritePageCtrl($scope, $http, $filter, toastr, editableOptions, editableThemes) {
     
     $scope.selected = [];
     $scope.isChecked = false;
     $scope.selectedBoxes = [];
     $scope.itemsByPage = 10;
-
+      var tableStateRef;
       var ctrl = this;
 
       $scope.callServer = function(tableState){
           ctrl.isLoading = true;
+          tableStateRef = tableState;
           var pagination = tableState.pagination;
           var start = pagination.start || 0;
           var number = pagination.number || 10;
@@ -31,8 +32,7 @@
           });
       }
 
-      $scope.onDelete = function () {
-          debugger
+      $scope.onDelete = function (tableState) {
           var ids = '';
           if($scope.selected.length > 0){
               ids = $scope.selected.join(',');
@@ -40,8 +40,7 @@
               toastr.error('请先选择要删除的项');
               return;
           }
-          debugger;
-          return;
+
           $http({
               url: '/favorites/delete',
               method: 'POST',
@@ -50,11 +49,12 @@
                   ids: ids
               }
           }).then(function (res) {
-              $scope.submitted = false;
+              debugger
               if(res.data.code < 0){
                   toastr.error(res.data.msg);
               }else{
                   toastr.success(res.data.msg);
+                  $scope.callServer(tableStateRef);
               }
           });
       }
@@ -72,7 +72,6 @@
      $scope.updateSelection = function($event, id){
            var checkbox = $event.target;
            var action = (checkbox.checked?'add':'remove');
-         debugger
            updateSelected(action,id,checkbox.name);
            if(checkbox.checked){
              $scope.selectedBoxes.push(checkbox);
@@ -84,7 +83,6 @@
      }
 
     $scope.selectAll = function ($event){
-        debugger
       var checkbox = $event.target;
       $scope.isChecked = (checkbox.checked);
       $scope.selectedBoxes.forEach(function(item){
@@ -95,10 +93,11 @@
             if(checkbox.checked){
                 $scope.selected.push(item.id);
             }else {
-                $scope.selected.slice(item.id, 1);
+                $scope.selected.splice(item.id, 1);
             }
-
         })
+
+        debugger;
     }
   }
 

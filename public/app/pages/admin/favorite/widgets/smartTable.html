@@ -1,5 +1,5 @@
 <div class="horizontal-scroll">
-  <table class="table" st-table="items"  st-pipe="callServer">
+  <table class="table" st-safe-src="rowCollection" st-table="items"  st-pipe="callServer">
     <thead>
     <tr class="sortable header-row">
       <th style="padding-left: 25px;"><input type="checkbox" ng-model="isChecked" ng-click="selectAll($event)"></th>
@@ -17,7 +17,7 @@
     <tfoot>
     <tr>
       <td colspan="1" class="text-center" style="padding-top: 15px">
-        <button type="button" ng-click="onDelete" class="btn btn-primary btn-with-icon ">
+        <button type="button" ng-click="onDelete()" class="btn btn-primary btn-with-icon ">
           <i class="ion-android-delete"></i>删除
         </button>
       </td>
