@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const utils = require('utility');
 var uuid = require('node-uuid');
 var dbService = require('../services/dbservice');
 var Json = require('../lib/result');
@@ -38,7 +37,7 @@ router.post("/register", function (req, res, next) {
         {
           id: uuid.v1(),
           username: username,
-          password: utils.md5(pwd),
+          password: pwd,
           email: email
         }
     ).then(function (result) {
@@ -70,7 +69,7 @@ router.post("/login", function (req, res, next) {
 
   try{
     service.getOne({username: username}).then(function (result) {
-        res.send(Json.success(result && result.password == utils.md5(pwd)));
+        res.send(Json.success(result && result.password == pwd));
     });
   }catch (e){
     console.log(e);

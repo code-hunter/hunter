@@ -9,7 +9,7 @@
     angular.module('Hunter.pages.auth.login')
         .controller('LoginPageCtrl', LoginPageCtrl);
 
-    function LoginPageCtrl($scope, $http, toastr, fileReader, $filter, $uibModal) {
+    function LoginPageCtrl($scope, $http, md5) {
         $scope.logined = false;
         $scope.submitted = false;
         $scope.user = {username: "", password: ""};
@@ -26,7 +26,7 @@
                 emulateJSON: true,
                 data: {
                     username: $scope.user.username,
-                    password: $scope.user.password
+                    password: md5.createHash($scope.user.password)
                 }
             }).then(function (res) {
                 debugger;

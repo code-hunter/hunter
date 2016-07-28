@@ -27,7 +27,7 @@
                 data: {
                     username: $scope.user.username,
                     email: $scope.user.email,
-                    password: $scope.user.password
+                    password: md5.createHash($scope.user.password)
                 }
             }).then(function (res) {
                 if(res.data && res.data.code == 0) {
