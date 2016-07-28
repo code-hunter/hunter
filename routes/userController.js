@@ -47,7 +47,7 @@ router.post("/register", function (req, res, next) {
       if(1 == result.insertedCount) {
         var user = result.ops[0];
         //set cookie
-        res.cookie("login", true);
+        res.cookie("userId", user.id);
         //set session
         req.session.regenerate(function(){
           req.user = user;
