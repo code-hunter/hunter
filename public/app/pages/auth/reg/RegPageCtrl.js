@@ -30,6 +30,7 @@
                     password: md5.createHash($scope.user.password)
                 }
             }).then(function (res) {
+                debugger;
                 if(res.data && res.data.code == 0) {
                     window.location.href = "#/admin/profile"
                 }else{
