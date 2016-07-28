@@ -11,7 +11,7 @@
 
 
     /** @ngInject */
-    function RegPageCtrl($scope, $http, $location) {
+    function RegPageCtrl($scope, $http,md5, $location) {
         $scope.submitted = false;
         $scope.user = {username: "", password: "", email: "",passwordRepeat:""};
 
