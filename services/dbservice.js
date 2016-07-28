@@ -26,9 +26,9 @@ var DbService = function (dbSource) {
         return dbApi.findOneAndDelete(this.dbSource, filter);
     },
 
-    DbService.prototype.updateById = function (id) {
+    DbService.prototype.updateById = function (id, newDoc) {
         filter = {'id': id};
-        return dbApi.findOneAndUpdate(this.dbSource, filter);
+        return dbApi.findOneAndUpdate(this.dbSource, filter, newDoc);
     },
 
     DbService.prototype.save = function (doc) {

@@ -7,9 +7,8 @@
       </div>
     </div>
 
-    <form name="myForm" ng-submit="submitForm(myForm.$valid)" novalidate>
-
     <h3 class="with-line">个人信息</h3>
+    <form name="myForm" ng-submit="onSubmitProfile(myForm.$valid)" novalidate>
 
     <div class="row">
       <div class="col-md-6">
@@ -24,7 +23,7 @@
               </div>
               <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
               <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
-              <input type="file" ng-model="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
+              <input type="file" ng-model="image" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
             </div>
           </div>
         </div>
@@ -75,15 +74,21 @@
       </div>
     </div>
 
-    <h3 class="with-line">修改密码</h3>
+      <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+        <i class="ion-android-checkmark-circle"></i>提交修改
+      </button>
 
+    </form>
+
+    <h3 class="with-line">修改密码</h3>
+    <form name="passForm" ng-submit="onSubmitPassword(passForm.$valid)" novalidate>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row clearfix">
           <label for="inputPassword" class="col-sm-3 control-label">新密码</label>
 
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="inputPassword" placeholder="" value="">
+            <input type="password" name="pass" ng-model="profile.pass" class="form-control" id="inputPassword"  >
           </div>
         </div>
       </div>
@@ -92,7 +97,7 @@
           <label for="inputConfirmPassword" class="col-sm-3 control-label">重复密码</label>
 
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="inputConfirmPassword" placeholder="">
+            <input type="password" name="repass" ng-model="profile.repass" class="form-control" id="inputConfirmPassword" >
           </div>
         </div>
       </div>

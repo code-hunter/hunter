@@ -8,13 +8,15 @@ var session = require('express-session');
 var everyauth = require('./lib/everyauth/index');
 require('./lib/auth/auth-settings')
 
+var loginFilter = require('./lib/filter/loginFilter').loginFilter;
+
 var MongoStore = require('connect-mongo')(session);
 var config = require('./config/config')
 
 var archives = require('./routes/archive');
 var routes = require('./routes/index');
 var users = require('./routes/userController');
-var profiles = require('./routes/profile');
+var profiles = require('./routes/profileController');
 
 var app = express();
 
@@ -52,10 +54,15 @@ app.use(session({
   secret: 'hunter security'
 }))
 
+//login filter
+app.use(loginFilter);
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/archives', archives);
 app.use('/profiles', profiles);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

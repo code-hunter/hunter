@@ -9,9 +9,9 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, $http, toastr,Upload, fileReader, $filter, $uibModal) {
+  function ProfilePageCtrl($scope, $http, toastr,Upload,md5, fileReader, $filter, $uibModal) {
     $scope.submitted = false;
-    $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:''};
+    $scope.profile = {username:'testname', nickname:'testnick', phone:'', email:'', pass:"", repass:''};
     $scope.picture = $filter('profilePicture')('Nasta');
 
     $scope.removePicture = function () {
@@ -22,7 +22,6 @@
     $scope.uploadPicture = function () {
       var fileInput = document.getElementById('uploadFile');
       fileInput.click();
-
     };
 
     $scope.onFileSelect = function ($files) {
@@ -47,58 +46,52 @@
           });
     };
   
-    $scope.submitForm = function (isValid) {
+    $scope.onSubmitProfile = function (isValid) {
       $scope.submitted = true;
-      alert(isValid);
+      if(!isValid) {
+        return;
+      }
+      
+      alert(($scope.profile.pass));
+      return;
+      Upload.upload({
+        url: '/profiles/save',
+        data:{file: $scope.file,
+              profile: $scope.profile}
+      }).then(function(res){
+        $scope.submitted = false;
+        if(res.data.code < 0){
+          toastr.error(res.data.msg);
+        }else{
+          toastr.success(res.data.msg);
+        }
+      });
+    };
+
+    $scope.onSubmitPassword = function (isValid) {
+      
+      $scope.submitted = true;
       if(!isValid) {
         return;
       }
 
-      Upload.upload({
-        url: '/profiles/save',
-        data:{file: $scope.file,
-              profile: $scope.profile,
-              username : $scope.profile.username}
-      }).then(function(res){
-        toastr.success('Your information has been saved successfully!');
+      $http({
+        url: '/profiles/modPass',
+        method: 'POST',
+        emulateJSON: true,
+        data: {
+          password: md5.createHash($scope.profile.pass)
+        }
+      }).then(function (res) {
+        $scope.submitted = false;
+        if(res.data.code < 0){
+          toastr.error(res.data.msg);
+        }else{
+          toastr.success(res.data.msg);
+        }
       });
 
-      // $http({
-      //   method: 'POST',
-      //   url: '/profiles/save',
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   },
-      //   data: {
-      //     email: $scope.profile.email,
-      //     upload: $scope.file
-      //   },
-      //   transformRequest: function (data, headersGetter) {
-      //     var formData = new FormData();
-      //     angular.forEach(data, function (value, key) {
-      //       formData.append(key, value);
-      //     });
-      //
-      //     var headers = headersGetter();
-      //     delete headers['Content-Type'];
-      //
-      //     return formData;
-      //   }
-      // })
-      //     .success(function (data) {
-      //       toastr.success('Your information has been saved successfully!');
-      //     })
-      //     .error(function (data, status) {
-      //       toastr.error("Your information hasn't been saved!", 'Error');
-      //     });
-
-      // $http.post('/profiles/save', $scope.file).success(function () {
-      //   toastr.success('Your information has been saved successfully!');
-      // }).error(function () {
-      //   toastr.error("Your information hasn't been saved!", 'Error');
-      // })
-
-    };
+    }
 
   }
 })();

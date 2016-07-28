@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "angular-md5": "^0.1.10",
     "body-parser": "~1.15.1",
     "connect-mongo": "^1.2.1",
     "connect-multiparty": "^2.0.0",

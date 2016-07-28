@@ -12,6 +12,7 @@ angular.module('Hunter', [
   'ui.slimscroll',
   'ngJsTree',
   'angular-progress-button-styles',
+    'angular-md5',
 
   'Hunter.pages',
     'Hunter.theme'

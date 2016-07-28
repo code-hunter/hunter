@@ -15,7 +15,6 @@
           url: '/favorite', 
           title: '我的收藏',
           templateUrl : 'app/pages/admin/favorite/favorite.html',
-          // controller: 'PipeCtrl',
             controller: 'FavoritePageCtrl',
           sidebarMeta: {
             icon: 'ion-grid',
