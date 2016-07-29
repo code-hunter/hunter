@@ -8,13 +8,11 @@
         .controller('PageTopCtrl', PageTopCtrl);
 
     /** @ngInject */
-    function PageTopCtrl($scope, $http,layoutPaths) {
+    function PageTopCtrl($scope, $http,toastr,layoutPaths) {
         $scope.imageUrl = '';
         $scope.isLogin = false;
         debugger
         $http.get('/profiles/get').then(function (res) {
-
-            debugger
             if(res.data.code < 0 ){
                 $scope.isLogin = false;
                 $scope.imageUrl = layoutPaths.images.defaultProfileImage;
@@ -28,8 +26,17 @@
                     $scope.imageUrl = res.data.data.image_url;
                 }
             }
-            debugger
         })
+
+        $scope.on_signout = function () {
+            $http.get('/users/logout').then(function (res) {
+                if(res.data.code < 0 ){
+                    toastr(res.data.msg);
+                }else {
+                    $scope.isLogin = false;
+                }
+            })
+        }
     }
 
 })();

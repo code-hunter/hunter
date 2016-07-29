@@ -88,8 +88,19 @@ router.post('/save', function (req, res, next) {
 
         try{
             profileService.save(doc).then(function (result) {
-                res.send(Json.success(result));
+                userService.getById(doc.user_id).then(function (result) {
+                    if(result.username !== req.body.profile.username){
+                        if(req.body.profile.username){
+                            var user = {}
+                            user.username = req.body.profile.username;
+                            userService.save(user).then(function (result) {
+                                res.send(Json.success());
+                            })
+                        }
+                    }
+                })
             })
+            
         }catch (e) {
             res.send(Json.error(e));
         }

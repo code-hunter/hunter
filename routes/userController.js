@@ -6,6 +6,7 @@ var Json = require('../lib/result');
 var dbConfig = require('../config/db')
 
 var service = new dbService(dbConfig.user);
+var profileService = new dbService(dbConfig.profile);
 
 router.get("/check", function (req, res, next) {
   var key = req.query.key;
@@ -24,34 +25,36 @@ router.get("/check", function (req, res, next) {
     console.log(e);
     res.send(Json.error(e));
   }
-
 });
 
 router.post("/register", function (req, res, next) {
-  var username = req.body.username;
-  var email = req.body.email;
-  var pwd = req.body.password;
+  var doc = {}
+  doc.id = uuid.v1();
+  doc.username = req.body.username;
+  doc.email = req.body.email;
+  doc.password = req.body.password;
+
+  var profile = {};
+  profile = doc;
+  profile.user_id = doc.id;
+  profile.id = uuid.v1();
 
   try{
-    service.save(
-        {
-          id: uuid.v1(),
-          username: username,
-          password: pwd,
-          email: email
-        }
-    ).then(function (result) {
+    service.save(doc).then(function (result) {
       if(1 == result.insertedCount) {
         var user = result.ops[0];
         //set cookie
         res.cookie("userId", user.id);
         //set session
-        req.session.regenerate(function(){
-          req.session.user = user;
-          req.session.user_id = user.id;
-          req.session.save();
-          res.send(Json.success());
-        });
+
+        profileService.save(profile).then(function (result) {
+          req.session.regenerate(function(){
+            req.session.user = user;
+            req.session.user_id = user.id;
+            req.session.save();
+            res.send(Json.success());
+          });
+        })
       }else{
         res.send(Json.error());
       }
@@ -61,7 +64,6 @@ router.post("/register", function (req, res, next) {
     res.send(Json.error());
   }
 });
-
 
 router.post("/login", function (req, res, next) {
   var username = req.body.username;
@@ -88,10 +90,13 @@ router.post("/login", function (req, res, next) {
     res.send(Json.error(e));
   }
 });
+
 router.get("/logout", function (req, res, next) {
   res.clearCookie("login");
+  res.clearCookie("userId");
   delete res.session.user;
   delete res.session.user_id;
-  res.send("/")
+  res.send(Json.success());
 });
+
 module.exports = router;

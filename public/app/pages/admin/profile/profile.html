@@ -1,11 +1,5 @@
 <div ba-panel ba-panel-class="profile-page">
   <div class="panel-content">
-    <div class="progress-info">您的资料完整度为70%</div>
-    <div class="progress">
-      <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
-           aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-      </div>
-    </div>
 
     <h3 class="with-line">个人信息</h3>
     <form name="myForm" ng-submit="onSubmitProfile(myForm.$valid)" novalidate>
@@ -47,7 +41,7 @@
           <label for="inputLastName" class="col-sm-3 control-label">电话</label>
 
           <div class="col-sm-9">
-            <input type="number" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" minlength="11" maxlength="11">
+            <input type="text" name="phone" class="form-control" id="inputLastName" ng-model="profile.phone" placeholder="" minlength="11" maxlength="11">
             <p ng-show="(myForm.phone.$error.minlength ||myForm.phone.$error.maxlength) &&  submitted" class="help-block">电话必须是11位.</p>
           </div>
         </div>

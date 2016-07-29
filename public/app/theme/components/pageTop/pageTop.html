@@ -16,7 +16,7 @@
   </div>
 
   <div ng-show="!isLogin" class="login">
-    <button type="button" class="btn btn-primary "><a href="/auth.html" class="while-color">登陆</a>/<a href="/reg.html" class="while-color">注册</a></button>
+    <button type="button" class="btn btn-primary "><a href="#/login" class="while-color">登陆</a>/<a href="#/reg" class="while-color">注册</a></button>
   </div>
 
   <div ng-show="isLogin" class="user-profile clearfix">
@@ -28,7 +28,7 @@
       <ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
         <li><i class="dropdown-arr"></i></li>
         <li><a href="#/admin/profile"><i class="fa fa-cog"></i>设置</a></li>
-        <li><a href class="signout"><i class="fa fa-power-off"></i>退出</a></li>
+        <li><a href="javascript: void(0)" ng-click="on_signout()" class="signout"><i class="fa fa-power-off"></i>退出</a></li>
       </ul>
     </div>
   </div>
