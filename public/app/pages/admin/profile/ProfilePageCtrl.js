@@ -15,6 +15,22 @@
     $scope.profile = {username:'', nickname:'', phone:'', email:'', pass:"", repass:''};
     $scope.picture = $filter('profilePicture')('nohead');
 
+    $http.get('/profiles/get').then(function (res) {
+      debugger;
+      if(res.data.code < 0 ){
+        window.location.href= "#/";
+      }else {
+        if(!res.data.data) {
+          window.location.href= "#/";
+        }else{
+          $scope.profile = res.data.data;
+          if($scope.profile.image_url){
+            $scope.picture = $scope.profile.image_url;
+          }
+        }
+      }
+    })
+
     $scope.removePicture = function () {
       $scope.picture = $filter('appImage')('theme/no-photo.png');
       $scope.noPicture = true;
@@ -53,13 +69,12 @@
         return;
       }
       
-      alert(($scope.profile.pass));
-      return;
       Upload.upload({
         url: '/profiles/save',
         data:{file: $scope.file,
               profile: $scope.profile}
       }).then(function(res){
+        debugger
         $scope.submitted = false;
         if(res.data.code < 0){
           toastr.error(res.data.msg);
@@ -70,15 +85,13 @@
     };
 
     $scope.onSubmitPassword = function (isValid) {
-      
+
+      debugger  
       $scope.submittedPass = true;
       if(!isValid) {
         return;
       }
       
-      alert(isValid);
-      return;
-
       $http({
         url: '/profiles/modPass',
         method: 'POST',
@@ -94,8 +107,6 @@
           toastr.success(res.data.msg);
         }
       });
-
     }
-
   }
 })();

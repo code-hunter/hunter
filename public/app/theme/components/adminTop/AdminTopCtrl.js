@@ -13,7 +13,6 @@
         $scope.imageUrl = '';
         
         $http.get('/profiles/get').then(function (res) {
-
             if(res.data.code < 0 ){
                 $scope.isLogin = false;
                 $scope.imageUrl = layoutPaths.images.defaultProfileImage;

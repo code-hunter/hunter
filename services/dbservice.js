@@ -21,6 +21,11 @@ var DbService = function (dbSource) {
         return dbApi.findOne(this.dbSource, query);
     },
 
+    DbService.prototype.getByUserId = function (user_id) {
+        query = {'user_id': user_id};
+        return dbApi.findOne(this.dbSource, query);
+    },
+
     DbService.prototype.deleteById = function (id) {
         filter = {'id': id};
         return dbApi.findOneAndDelete(this.dbSource, filter);
@@ -28,6 +33,11 @@ var DbService = function (dbSource) {
 
     DbService.prototype.updateById = function (id, newDoc) {
         filter = {'id': id};
+        return dbApi.findOneAndUpdate(this.dbSource, filter, newDoc);
+    },
+
+    DbService.prototype.updateByUserId = function (user_id, newDoc) {
+        filter = {'user_id': user_id};
         return dbApi.findOneAndUpdate(this.dbSource, filter, newDoc);
     },
 

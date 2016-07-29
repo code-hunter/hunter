@@ -35,7 +35,8 @@ router.post("/register", function (req, res, next) {
   doc.password = req.body.password;
 
   var profile = {};
-  profile = doc;
+  profile.username = doc.username;
+  profile.email = doc.email
   profile.user_id = doc.id;
   profile.id = uuid.v1();
 
@@ -94,8 +95,12 @@ router.post("/login", function (req, res, next) {
 router.get("/logout", function (req, res, next) {
   res.clearCookie("login");
   res.clearCookie("userId");
-  delete res.session.user;
-  delete res.session.user_id;
+  if(req.session.user){
+    delete req.session.user;
+  }
+  if (req.session.user_id){
+    delete req.session.user_id;
+  }
   res.send(Json.success());
 });
 

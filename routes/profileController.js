@@ -19,8 +19,6 @@ router.get('/get', function (req, res, next) {
     var q = {};
     if (user_id) {
         q.user_id = user_id;
-    }else {
-        q.user_id = '111';
     }
 
     try{
@@ -60,7 +58,6 @@ router.post('/save', function (req, res, next) {
         }
         var doc = {}
         doc.user_id = req.session.user_id;
-        doc.id = uuid.v1();
         doc.create_time = utils.YYYYMMDDHHmmss();
         
         if(req.files.length > 0) {
@@ -87,7 +84,7 @@ router.post('/save', function (req, res, next) {
         }
 
         try{
-            profileService.save(doc).then(function (result) {
+            profileService.updateByUserId(doc.user_id, doc).then(function (result) {
                 userService.getById(doc.user_id).then(function (result) {
                     if(result.username !== req.body.profile.username){
                         if(req.body.profile.username){
@@ -97,6 +94,8 @@ router.post('/save', function (req, res, next) {
                                 res.send(Json.success());
                             })
                         }
+                    }else{
+                        res.send(Json.success());
                     }
                 })
             })
@@ -114,7 +113,7 @@ router.post('/modPass', function (req, res, next) {
         var password = req.body.password;
 
         userService.getById(user_id).then(function (result) {
-            var user = result.data;
+            var user = result;
             user.password = password;
 
             userService.updateById(user_id, user).then(function (result) {
