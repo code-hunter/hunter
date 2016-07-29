@@ -8,7 +8,14 @@ const App = {
     version: "0.1.0",
     uploadDir : path.join(__dirname, '../public/uploads'),
     // authUrls : ['/profiles/save','/archive/getFavs', '/profiles/get', '/profiles/modPass'],
-    authUrls : ['/profiles/save','/archive/getFavs', '/profiles/modPass'],
+    authUrls : ['/profiles/save',
+                 '/profiles/modPass',
+                 '/profiles/get',
+                 '/favorites/save',
+                 '/favorites/getPage',
+                 '/favorites/delete',
+                 '/approves/save'
+                 ],
     dev: {
         db:{
            connection : "mongodb://localhost:27017/hunter"  

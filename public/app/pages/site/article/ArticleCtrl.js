@@ -6,7 +6,7 @@
         .controller('ArticleCtrl', ArticleCtrl);
 
     /** @ngInject */
-    function ArticleCtrl($scope, $http, $location) {
+    function ArticleCtrl($scope, $http, toastr) {
 
         $scope.page = 1;
         $scope.size = 10;
@@ -46,23 +46,43 @@
         };
 
         $scope.on_approve = function (doc_id) {
-            if(!App.checkLogin()){
-                $location = '#/login';
+            if(!doc_id){
+                window.location.href = '#/login';
             }
 
-            this.$http({
-                url: '/archives/createApprove',
+            $http({
+                url: '/approves/save',
                 method: 'POST',
                 emulateJSON: true,
                 data: {
                     archive_id: doc_id
                 }
             }).then(function (res) {
-                if (res.data.status == "fail") {
-                    if (res.data.code == "0001") {
-                        this.show("点赞失败");
-                        alert("点赞失败");
-                    }
+                if (res.data.code < 0) {
+                    toastr.error(res.data.msg);
+                }else{
+                    toastr.success(res.data.msg);
+                }
+            });
+        };
+
+        $scope.on_bookmark = function (doc_id) {
+            if(!doc_id){
+                window.location.href = '#/login';
+            }
+
+            $http({
+                url: '/favorites/save',
+                method: 'POST',
+                emulateJSON: true,
+                data: {
+                    archive_id: doc_id
+                }
+            }).then(function (res) {
+                if (res.data.code < 0) {
+                    toastr.error(res.data.msg);
+                }else{
+                    toastr.success(res.data.msg);
                 }
             });
         };

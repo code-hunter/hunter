@@ -31,11 +31,12 @@
             }).then(function (res) {
                 debugger;
                 var result = res.data;
-                if(result && result.code == 0 && result.data) {
+                if(result && result.code == 0) {
                     window.location.href = "#/"
                 }else{
                     $scope.logined = true;
                 }
+                debugger
                 $scope.submitted = false;
             });
         };

@@ -8,7 +8,7 @@ var uuid = require('node-uuid');
 
 var dbService = require('../services/dbservice');
 var Json = require('../lib/result');
-var dbConfig = require('../config/db')
+var dbConfig = require('../config/db');
 
 var profileService = new dbService(dbConfig.profile);
 var userService = new dbService(dbConfig.user);
@@ -25,11 +25,11 @@ router.get('/get', function (req, res, next) {
 
     try{
         profileService.getOne(q).then(function (result) {
-            res.send(result);
+            res.send(Json.success(result));
         })
 
     }catch (e) {
-        throw e;
+        res.send(Json.error(e));
     }
 })
 
@@ -88,7 +88,7 @@ router.post('/save', function (req, res, next) {
 
         try{
             profileService.save(doc).then(function (result) {
-                res.send(result);
+                res.send(Json.success(result));
             })
         }catch (e) {
             res.send(Json.error(e));
@@ -107,7 +107,7 @@ router.post('/modPass', function (req, res, next) {
             user.password = password;
 
             userService.updateById(user_id, user).then(function (result) {
-                res.send(result);
+                res.send(Json.success(result));
             })
         })
     }catch (e) {

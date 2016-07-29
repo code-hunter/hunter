@@ -1,19 +1,23 @@
 
 <div ng-repeat="doc in docs">
     <div>
-        <!--<div class="">-->
-        <!--<a href="" @click="on_approve(doc._id)"><span class="ion-heart "></span></a>-->
-        <!--<a href="" @click="on_bookmark(doc._id)"><span class="ion-star "></span></a>-->
-        <!--</div>-->
-        <div class="article-title">
-            <a href={{doc.url}} target="_blank">{{doc.title}}</a>
-        </div>
-        <div class="article-meta">
-            <span><a href="" class="article-author">作者:{{doc.author}}&nbsp;</a></span>
-            <span>{{doc.published_time}}</span>
-        </div>
-        <div class="article-summary">
-            {{doc.summary}}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="article-title">
+                    <a href={{doc.url}} target="_blank">{{doc.title}}</a>
+                </div>
+                <div class="article-meta">
+                    <span><a href="" class="article-author">作者:{{doc.author}}&nbsp;&nbsp;</a></span>
+                    <span>{{doc.published_time}}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" ng-click="on_approve(doc.id)"><span class="ion-heart "></span>点赞</a>
+                    &nbsp;&nbsp;
+                    <a href="javascript:void(0)" ng-click="on_bookmark(doc.id)"><span class="ion-star "></span>收藏</a>
+                </div>
+                <div class="article-summary">
+                    {{doc.summary}}
+                </div>
+            </div>
         </div>
     </div>
     <hr>

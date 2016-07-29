@@ -18,6 +18,7 @@ var routes = require('./routes/index');
 var users = require('./routes/userController');
 var profiles = require('./routes/profileController');
 var favorites = require('./routes/favoriteController');
+var approves = require('./routes/approveController');
 
 var app = express();
 
@@ -63,8 +64,7 @@ app.use('/users', users);
 app.use('/archives', archives);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
-
-
+app.use('/approves', approves);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

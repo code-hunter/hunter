@@ -10,6 +10,7 @@ var Json = require('../lib/result');
 
 var dbConfig = require('../config/db');
 var approveService = new dbService(dbConfig.approve)
+var archiveService = new dbService(dbConfig.archive)
 
 router.get('/getPage', function (req, res, next) {
     try{
@@ -64,7 +65,7 @@ router.post('/save', function (req, res, next) {
 
         q = {};
         q.id = doc.archive_id;
-        approveService.getOne(q).then(function (ret) {
+        archiveService.getOne(q).then(function (ret) {
             doc.title = ret.title;
             doc.url = ret.url;
             doc.author = ret.author;

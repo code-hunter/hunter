@@ -47,8 +47,8 @@ router.post("/register", function (req, res, next) {
         res.cookie("userId", user.id);
         //set session
         req.session.regenerate(function(){
-          req.user = user;
-          req.session.userId = user.id;
+          req.session.user = user;
+          req.session.user_id = user.id;
           req.session.save();
           res.send(Json.success());
         });
@@ -69,7 +69,19 @@ router.post("/login", function (req, res, next) {
 
   try{
     service.getOne({username: username}).then(function (result) {
-        res.send(Json.success(result && result.password == pwd));
+      if(result && result.password == pwd){
+        var user = result;
+        res.cookie("userId", user.id);
+        //set session
+        req.session.regenerate(function(){
+          req.session.user = user;
+          req.session.user_id = user.id;
+          req.session.save();
+          res.send(Json.success());
+        });
+      }else {
+        res.send(Json.error('用户不存在或密码错误'))
+      }
     });
   }catch (e){
     console.log(e);
