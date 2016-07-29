@@ -91,11 +91,11 @@ router.post('/save', function (req, res, next) {
                             var user = {}
                             user.username = req.body.profile.username;
                             userService.save(user).then(function (result) {
-                                res.send(Json.success());
+                                res.send(Json.success(doc));
                             })
                         }
                     }else{
-                        res.send(Json.success());
+                        res.send(Json.success(doc));
                     }
                 })
             })

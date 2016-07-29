@@ -11,6 +11,10 @@
     function AdminTopCtrl($scope, $http,layoutPaths) {
         
         $scope.imageUrl = '';
+
+        $scope.$on('imageChanged', function (event, msg) {
+            $scope.imageUrl = msg;
+        });
         
         $http.get('/profiles/get').then(function (res) {
             if(res.data.code < 0 ){

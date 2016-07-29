@@ -64,6 +64,7 @@
     };
   
     $scope.onSubmitProfile = function (isValid) {
+      debugger
       $scope.submitted = true;
       if(!isValid) {
         return;
@@ -80,13 +81,17 @@
           toastr.error(res.data.msg);
         }else{
           toastr.success(res.data.msg);
+
+          if($scope.file){
+            $scope.$emit("imageChanged", res.data.data.image_url);
+          }
         }
       });
     };
 
     $scope.onSubmitPassword = function (isValid) {
 
-      debugger  
+      debugger
       $scope.submittedPass = true;
       if(!isValid) {
         return;
