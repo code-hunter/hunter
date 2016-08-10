@@ -16,7 +16,6 @@
     $scope.picture = $filter('profilePicture')('nohead');
 
     $http.get('/profiles/get').then(function (res) {
-      debugger;
       if(res.data.code < 0 ){
         window.location.href= "#/";
       }else {

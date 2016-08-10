@@ -3,16 +3,16 @@
 
     <ul class="nav navbar-nav subject-top">
       <li>
-        <a class="subject-font" href="#">科技</a>
+        <a class="subject-font" ng-click="onSubject('technology')">科技</a>
       </li>
       <li>
-        <a class="subject-font" href="#">金融</a>
+        <a class="subject-font" ng-click="onSubject('finance')">金融</a>
       </li>
     </ul>
 
   <div class="search">
-    <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
-    <input id="searchInput" type="text" placeholder="搜索">
+    <i class="ion-ios-search-strong" ng-click="onSearch()"></i>
+    <input id="searchInput" type="text" ng-model="search_title" placeholder="搜索">
   </div>
 
   <div ng-show="!isLogin" class="login">

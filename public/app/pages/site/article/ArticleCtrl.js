@@ -17,6 +17,13 @@
             $scope.docs = res.data
         });
 
+        $scope.$on('articleChanged', function (event, data) {
+            $scope.search_title = data.search_title;
+            $scope.search_subject= data.search_subject;
+            $scope.docs = data.result;
+            debugger
+        });
+
         $scope.on_prev = function () {
             if(this.page == 1) {
                 alert('first page.');
